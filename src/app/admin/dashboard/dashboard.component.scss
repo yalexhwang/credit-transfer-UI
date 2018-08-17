@@ -1,0 +1,15 @@
+#dashboard-component {
+
+  .panel-wrapper {
+    display: flex;
+    flex-flow: row nowrap;
+    margin-bottom: 10px;
+    justify-content: space-between;
+    .panel {
+      flex: 1;
+      margin-bottom: 0px;
+      margin-right: 3px;
+      margin-left: 3px;
+    }
+  }
+}

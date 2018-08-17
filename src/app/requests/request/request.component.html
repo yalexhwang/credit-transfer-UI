@@ -1,0 +1,335 @@
+<div id="request-component" *ngIf="request && self">
+
+  <div class="navigation-space">
+    (TEST: navigation space)
+    <!-- <div class="navigation" *ngIf="nav">
+      <div class="">
+        <button
+        class="btn btn-default"
+        type="button">
+          <span class="glyphicon glyphicon-triangle-top"></span>
+        </button>
+        <input readonly
+        class="form-control input-lg"
+        type="text"
+        [value]="nav.current + '/' + nav.total">
+        <button
+        class="btn btn-default"
+        type="button">
+          <span class="glyphicon glyphicon-triangle-bottom"></span>
+        </button>
+      </div>
+      <button
+      type="button"
+      class="btn btn-default">
+        Home
+      </button>
+    </div> -->
+  </div>
+
+
+  <div class="view">
+    <div
+    class="panel panel-default"
+    [ngClass]="{
+      'panel-danger': request.markAlert,
+      'panel-success': isApproved(),
+      'panel-info': isConditionallyApproved(),
+      'panel-warning': isDisapproved()
+    }">
+      <div class="panel-heading">
+        <div class="panel-title">
+          <div class="title">
+            <span class="step"
+            *ngIf="self.isRegistrar">
+              Step {{request.stepID}}
+            </span>
+            Request ID {{request.id}}
+          </div>
+          <div class="status">
+            <div class="key">
+              {{request.status.name}}
+            </div>
+            <div class="queue"
+            *ngIf="!isFinalized()">
+              {{request.inQueue}}
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="panel-body">
+        <section class="personnel">
+          <div class="card">
+            <div class="inner-left">
+              <span class="glyphicon glyphicon-user"></span>
+            </div>
+            <div class="inner-right">
+              <div class="title">
+                Registrar
+              </div>
+              <div class="value">
+                {{displayItem('registrar', 'name')}}
+              </div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="inner-left">
+              <span class="glyphicon glyphicon-user"></span>
+            </div>
+            <div class="inner-right">
+              <div class="title">
+                Staff
+              </div>
+              <div class="value">
+                {{displayItem('staff', 'name')}}
+                <div class="item">
+                  <div class="item-label">
+                    <span>Department</span>
+                  </div>
+                  <span class="item-value">
+                    {{this.displayItem('department', 'name')}}
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="inner-left">
+              <span class="glyphicon glyphicon-user"></span>
+            </div>
+            <div class="inner-right">
+              <div class="title">
+                Student
+              </div>
+              <div class="value">
+                {{displayItem('student', 'name')}}
+                <div class="item">
+                  <div class="item-label">
+                    <span>GTID</span>
+                  </div>
+                  <span class="item-value gtid">
+                    {{displayItem('student', 'gtID')}}
+                  </span>
+                </div>
+                <div class="item">
+                  <div class="item-label">
+                    <span>Email</span>
+                  </div>
+                  <span class="item-value">
+                    <a href="mailto:{{this.displayItem('student', 'email')}}">
+                    {{displayItem('student', 'email')}}
+                    </a>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+        <section class="course-info">
+          <div class="card">
+            <div class="inner-left">
+              <span class="glyphicon glyphicon-blackboard"></span>
+            </div>
+            <div class="inner-right">
+              <div class="title">
+                Course Info
+              </div>
+              <div class="value">
+                {{request.course.name}}
+                <div class="item">
+                  <div class="item-label">
+                    <span>Lab</span>
+                  </div>
+                  <span class="item-value">
+                    {{displayItem('lab')}}
+                  </span>
+                </div>
+                <div class="item">
+                  <div class="item-label">
+                    <span>Taken</span>
+                  </div>
+                  <span class="item-value">
+                    {{request.course.taken}}
+                  </span>
+                </div>
+                <div class="item">
+                  <div class="item-label">
+                    <span>School</span>
+                  </div>
+                  <span class="item-value">
+                    {{request.course.school.name}}
+                  </span>
+                </div>
+                <div class="item">
+                  <div class="item-label">
+                    <span>Documents</span>
+                  </div>
+                  <span class="item-value">
+                    <span
+                    *ngIf="request.course.documents.length === 0">
+                      N/A
+                    </span>
+                    <div
+                    class="doc"
+                    *ngFor="let doc of request.course.documents">
+                      <a href="http://innovation.registrar.gatech.edu/tc-test/public/uploads/{{doc}}" target="_blank">
+                        <span class="glyphicon glyphicon-open-file"></span>
+                        {{doc}}
+                      </a>
+                    </div>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="inner-left">
+              <span class="glyphicon glyphicon-info-sign"></span>
+            </div>
+            <div class="inner-right">
+              <div class="title">
+                Request Info
+              </div>
+              <div class="value">
+                <div class="item item-important">
+                  <div class="item-label">
+                    <span>Credit</span>
+                  </div>
+                  <span class="item-value">
+                    {{request.course.totalCreditHours}} hours
+                  </span>
+                  <span *ngIf="request.course.lab">
+                    ({{request.course.creditHours}} + {{request.course.lab.creditHours}})
+                  </span>
+                </div>
+                <div class="item item-important">
+                  <div class="item-label">
+                    <span>Seeking</span>
+                  </div>
+                  <span class="item-value">
+                    {{request.equivSought}}
+                  </span>
+                </div>
+                <div class="item item-important">
+                  <div class="item-label">
+                    <span>Admission</span>
+                  </div>
+                  <span class="item-value">
+                    {{displayItem('admission')}}
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+        <section
+        class="awards"
+        *ngIf="request.creditAwarded !== null">
+          <div class="card">
+            <div class="inner-left">
+              <span class="glyphicon glyphicon-certificate"></span>
+            </div>
+            <div class="inner-right">
+              <div class="title"
+              *ngIf="!isRegistrarEvaluated()">
+                Proposed Awards
+              </div>
+              <div class="title"
+              *ngIf="isRegistrarEvaluated()">
+                Awards
+              </div>
+              <div class="value">
+                <div
+                *ngIf="request.creditAwarded === 0">
+                  None made
+                  <span
+                  class="final-status"
+                  *ngIf="isFinalized()">
+                    {{request.status.name}}
+                  </span>
+                </div>
+                <div
+                *ngIf="request.creditAwarded > 0">
+                  <div class="item item-award"
+                  *ngFor="let award of request.activeAwards">
+                    <span class="item-label award-id">
+                      Award ID {{award.id}}
+                    </span>
+                    <span class="item-value award-credit">
+                      <strong>
+                      {{award.credit}} hours
+                      </strong>
+                    </span>
+                    <span class="item-value award-course">
+                      {{award.gtCourse.name}}
+                    </span>
+                  </div>
+                  <div class="item item-award-total">
+                    Total credit  <strong>{{request.creditAwarded}} hours</strong>
+                    <span *ngIf="!isRegistrarEvaluated()">
+                      proposed by Department
+                    </span>
+                    <span *ngIf="isRegistrarEvaluated()">
+                      finalized by Registrar
+                    </span>
+                    <span
+                    class="final-status"
+                    *ngIf="isFinalized()">
+                      {{request.status.name}}
+                    </span>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+
+    <div class="button-wrapper">
+      <div class="edge">
+        <button
+        type="button"
+        class="btn btn-default"
+        (click)="back()">
+          Back
+        </button>
+      </div>
+      <div class="middle"
+      *ngIf="!isFinalized()">
+        <button
+        type="button"
+        class="btn btn-danger"
+        (click)="takeAction()"
+        *ngIf="request.myTurn">
+          <span class="glyphicon glyphicon-warning-sign"></span>
+          Take Action
+        </button>
+        <button
+        type="button"
+        class="btn btn-warning"
+        disabled
+        *ngIf="!request.myTurn">
+          Awaiting {{request.whoseTurn}}
+        </button>
+      </div>
+      <div class="middle"
+      *ngIf="isFinalized()">
+
+      </div>
+      <div class="edge">
+      </div>
+    </div>
+
+    <div class="panel panel-default">
+      <div class="panel-body log-display">
+        <app-log-display
+        [layout]="layout"
+        [request]="request">
+        </app-log-display>
+      </div>
+    </div>
+  </div>
+
+</div>

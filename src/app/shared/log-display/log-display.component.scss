@@ -1,0 +1,101 @@
+@import '~styles.scss';
+
+#log-display-component {
+  .display-wrapper {
+    font-size: 12px;
+    .display {
+      display: flex;
+      margin-bottom: 7px;
+      .heading {
+        font-family: $main-font;
+        .key {
+          font-size: 13px;
+        }
+      }
+      .content {
+        .log-box {
+          margin-bottom: 3px;
+          font-family: $sub-font;
+          .top {
+            display: flex;
+            margin-bottom: 1px;
+            .date {
+              color: $bootstrap-grey;
+              font-size: 11px;
+            }
+          }
+          .bottom {
+            display: flex;
+            flex-flow: row nowrap;
+            .icon-box {
+              width: 16px;
+            }
+          }
+        }
+      }
+
+    }
+  }
+
+  .horizontal-display-wrapper {
+    .display-title {
+      border-bottom: 1px solid $lightest-grey;
+      color: $bootstrap-grey;
+      font-family: $main-font;
+    }
+    .display {
+      flex-flow: row nowrap;
+      .heading {
+        flex: 1;
+        margin-right: 20px;
+      }
+      .content {
+        flex: 3;
+        .log-box > .top {
+          flex-flow: row nowrap;
+          justify-content: space-between;
+          align-items: flex-end;
+        }
+        .log-box > .bottom {
+          margin-top: 2px;
+          margin-bottom: 2px;
+          padding: 4px 6px;
+          background-color: $paper-color;
+          border-radius: 5px;
+        }
+      }
+    }
+  }
+
+  .vertical-display-wrapper {
+    .display-title {
+      display: none;
+    }
+    .display {
+      flex-flow: column nowrap;
+      .heading > .key {
+        width: 100%;
+        text-align: right;
+        /* font-weight: 500; */
+      }
+      .content {
+        display: flex;
+        flex-flow: column nowrap;
+        .log-box {
+          background-color: $paper-color;
+          padding: 3px 7px;
+          border-radius: 5px;
+          .top {
+            flex-flow: column nowrap;
+            .date {
+              text-align: right;
+            }
+          }
+          .bottom > .text-box {
+            font-size: 11px;
+          }
+        }
+      }
+    }
+  }
+}

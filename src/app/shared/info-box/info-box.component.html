@@ -1,0 +1,22 @@
+<div id="info-box-component">
+  <div class="title">
+    {{info.title}}
+  </div>
+  <div class="detail">
+    {{info.detail}}
+    <div class="link">
+      <a
+      [href]="info.link.url"
+      target="_blank">
+        {{info.link.name}}
+        <span class="glyphicon glyphicon-link"></span>
+      </a>
+    </div>
+  </div>
+  <button
+  type="button"
+  class="btn btn-warning btn-sm"
+  (click)="onOK()">
+    OK
+  </button>
+</div>

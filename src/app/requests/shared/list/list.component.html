@@ -1,0 +1,286 @@
+<div id="list-component">
+  <accordion [closeOthers]="'true'">
+    <accordion-panel
+    [panelClass]="{
+      'panel-default': !request.markAlert,
+      'panel-danger': request.markAlert,
+      'panel-success': isApproved(request),
+      'panel-info': isConditionallyApproved(request),
+      'panel-warning': isDisapproved(request)
+    }"
+    *ngFor="let request of currentList; let i = index">
+      <div accordion-heading
+      class="heading"
+      (click)="toggleRequest(i)">
+        <div class="title">
+          Request ID {{request.id}}
+          <span class="course">
+            {{request.course.name}}
+            <span
+            *ngIf="request.course.lab">
+               with lab
+            </span>
+          </span>
+        </div>
+        <div class="standing">
+          <div class="turn-box">
+            <div
+            class="turn"
+            *ngIf="request.myTurn">
+              <span class="glyphicon glyphicon-warning-sign"></span>
+              Take Action
+            </div>
+          </div>
+          <div class="status-box">
+            <div class="status">
+              {{request.status.name}}
+            </div>
+            <div class="queue"
+            *ngIf="!isFinalized(request)">
+              {{request.inQueue}}
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class=""
+      *ngIf="openIndex === i">
+        <div class="content">
+          <div class="column-left">
+            <section>
+              <div class="inner-left">
+                <span class="glyphicon glyphicon-user"></span>
+              </div>
+              <div class="inner-right horizontal">
+                <div class="item">
+                  <div class="item-label">
+                    Registrar
+                  </div>
+                  <div class="item-value">
+                    <span
+                    *ngIf="request.registrar">
+                      {{request.registrar.name}}
+                    </span>
+                    <span
+                    *ngIf="!request.registrar">
+                      TBA
+                    </span>
+                  </div>
+                </div>
+                <div class="item">
+                  <div class="item-label">
+                    Department
+                  </div>
+                  <div class="item-value">
+                    <span
+                    *ngIf="request.department">
+                      {{request.department.name}}
+                    </span>
+                    <span
+                    *ngIf="!request.department">
+                      TBA
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </section>
+            <section>
+              <div class="inner-left">
+                <span class="glyphicon glyphicon-blackboard"></span>
+              </div>
+              <div class="inner-right vertical">
+                <div class="item">
+                  <div class="item-label">
+                    Course
+                  </div>
+                  <div class="item-value">
+                    {{request.course.name}}
+                  </div>
+                </div>
+                <div class="item">
+                  <div class="item-label">
+                    Lab
+                  </div>
+                  <div class="item-value">
+                    <span
+                    *ngIf="request.course.lab">
+                      {{request.course.lab.name}}
+                    </span>
+                    <span
+                    *ngIf="!request.course.lab">
+                      -
+                    </span>
+                  </div>
+                </div>
+                <div class="item">
+                  <div class="item-label">
+                    Taken
+                  </div>
+                  <div class="item-value">
+                    {{request.course.taken}}
+                  </div>
+                </div>
+                <div class="item">
+                  <div class="item-label">
+                    School
+                  </div>
+                  <div class="item-value">
+                    {{request.course.school.name}}
+                  </div>
+                </div>
+                <div class="item">
+                  <div class="item-label">
+                    Documents
+                  </div>
+                  <div class="item-value">
+                    <div
+                    class="doc"
+                    *ngFor="let doc of request.course.documents">
+                      <a href="http://innovation.registrar.gatech.edu/tc-test/public/uploads/{{doc}}" target="_blank">
+                        <span class="glyphicon glyphicon-open-file"></span>
+                        {{doc}}
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </section>
+            <section>
+              <div class="inner-left">
+                <span class="glyphicon glyphicon-info-sign"></span>
+              </div>
+              <div class="inner-right vertical">
+                <div class="item">
+                  <div class="item-label">
+                    Request Info
+                  </div>
+                </div>
+                <div class="item">
+                  <div class="item-label">
+                    Credit
+                  </div>
+                  <div class="item-value">
+                    {{request.course.totalCreditHours}} hours
+                    <span *ngIf="request.course.lab">
+                      ({{request.course.creditHours}} + {{request.course.lab.creditHours}})
+                    </span>
+                  </div>
+                </div>
+                <div class="item">
+                  <div class="item-label">
+                    Seeking
+                  </div>
+                  <span class="item-value">
+                    {{request.equivSought}}
+                  </span>
+                </div>
+                <div class="item">
+                  <div class="item-label">
+                    Admission
+                  </div>
+                  <span class="item-value">
+                    <span
+                    *ngIf="request.admissionRequired">
+                      Required
+                    </span>
+                    <span
+                    *ngIf="!request.admissionRequired">
+                      N/A
+                    </span>
+                  </span>
+                </div>
+              </div>
+            </section>
+            <section>
+              <div class="inner-left">
+                <span class="glyphicon glyphicon-certificate"></span>
+              </div>
+              <div class="inner-right vertical">
+                <div class="item">
+                  <div class="item-label">
+                    Awards
+                  </div>
+                  <div
+                  class="item-value"
+                  *ngIf="request.stepID < 5">
+                    TBA
+                  </div>
+                  <div
+                  class="item-value"
+                  *ngIf="request.stepID === 5">
+                    <div
+                    *ngIf="request.creditAwarded === 0">
+                      None made
+                      <span class="final-status">
+                        {{request.status.name}}
+                      </span>
+                    </div>
+                    <div
+                    *ngIf="request.creditAwarded > 0">
+                      <div
+                      class="award"
+                      *ngFor="let award of request.activeAwards">
+                        <div class="award-title">
+                          <span class="item-label">
+                            Award ID {{award.id}}
+                          </span>
+                           {{award.credit}} hour(s)
+                        </div>
+                        {{award.gtCourse.name}}
+                      </div>
+                      <div class="award-total">
+                        Total credit
+                        <strong>{{request.creditAwarded}} hours</strong>
+                      </div>
+                      <span class="final-status">
+                        {{request.status.name}}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </section>
+          </div>
+          <div class="column-right">
+            <div class="title">
+              Activities
+            </div>
+            <app-log-display
+            [layout]="layout"
+            [request]="request">
+            </app-log-display>
+          </div>
+        </div>
+        <div
+        class="action"
+        *ngIf="!isFinalized(request)">
+          <button
+          type="button"
+          class="btn btn-danger btn-lg"
+          (click)="passRequestUp(i)"
+          *ngIf="request.myTurn">
+            <span class="glyphicon glyphicon-warning-sign"></span>
+            Take Action
+          </button>
+          <button
+          type="button"
+          class="btn btn-default btn-lg"
+          disabled
+          *ngIf="!request.myTurn">
+            Awaiting {{request.whoseTurn}}
+          </button>
+        </div>
+      </div>
+    </accordion-panel>
+  </accordion>
+
+  <div class="pagination-wrapper">
+    <pagination
+    [totalItems]="requests.length"
+    [itemsPerPage]="numOfItems"
+    [maxSize]="maxPager"
+    [(ngModel)]="currentPage"
+    (pageChanged)="goToPage($event)">
+    </pagination>
+  </div>
+
+</div>

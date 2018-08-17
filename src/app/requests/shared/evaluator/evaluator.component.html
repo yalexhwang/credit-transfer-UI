@@ -1,0 +1,296 @@
+<div id="evaluator-component" *ngIf="request">
+  <div class="box-wrapper">
+    <label>Requested</label>
+    <div class="box">
+      <div class="line line-requested">
+        <div class="line-inner-left">
+          <span class="item-label">
+            Course
+          </span>
+          {{request.course.name}}
+        </div>
+        <div class="line-inner-right">
+          {{request.course.creditHours}}
+        </div>
+      </div>
+      <div
+      class="line line-requested"
+      *ngIf="request.course.lab">
+        <div class="line-inner-left">
+          <span class="item-label">
+            Lab
+          </span>
+          {{request.course.lab.name}}
+        </div>
+        <div class="line-inner-right">
+          {{request.course.lab.creditHours}}
+        </div>
+      </div>
+      <div
+      class="line"
+      *ngIf="request.equivSubject">
+        <div class="equiv-sought">
+          <span class="glyphicon glyphicon-info-sign">
+          </span>
+          Student seeking:
+          {{request.equivSubject.code}}{{request.equivSoughtNumber}}
+        </div>
+      </div>
+      <div class="line line-total">
+        <div class="line-inner-left">
+          Total Credit
+        </div>
+        <div class="line-inner-right">
+          {{request.course.totalCreditHours}} hour(s)
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div
+  class="box-wrapper"
+  *ngIf="self.isRegistrar">
+    <label>Proposed Awards</label>
+    <div class="box">
+      <div
+      class="line line-awarded"
+      *ngFor="let award of awards; let i = index">
+        <div class="line-inner-left">
+          <span
+          class="item-label"
+          *ngIf="!award.course.lab">
+            Course
+          </span>
+          <span class="item-label"
+          *ngIf="award.course.lab">
+            Lab
+          </span>
+          {{award.course.name}}
+        </div>
+        <div
+        class="line-inner-right"
+        *ngIf="!award.new">
+          <div class="credit-selector">
+            <select
+            class="form-control input-xs select-input"
+            name="awardCreditOptions"
+            [disabled]="editingIndex !== i"
+            [(ngModel)]="award.credit"
+            (ngModelChange)="updateAwardData(); getAwardsTotal()">
+              <option value="">0</option>
+              <option
+              [value]="credit"
+              *ngFor="let credit of award.course.creditOptions">
+                {{credit}}
+              </option>
+            </select>
+          </div>
+          <!-- {{award.credit}} credit hour(s) -->
+          <span (click)="editAward(i)">
+            <span class="glyphicon glyphicon-pencil"></span>
+          </span>
+        </div>
+        <div
+        class="line-inner-right"
+        *ngIf="award.new">
+          <div class="credit-selector">
+            <select
+            class="form-control input-xs select-input"
+            name="awardCreditOptions"
+            [(ngModel)]="award.credit"
+            (ngModelChange)="updateAwardData(); getAwardsTotal()">
+              <option
+              [value]="credit"
+              *ngFor="let credit of award.course.creditOptions">
+                {{credit}}
+              </option>
+            </select>
+          </div>
+          <!-- {{award.credit}} credit hour(s) -->
+          <span (click)="removeAward(i)">
+            <span class="glyphicon glyphicon-remove"></span>
+          </span>
+        </div>
+        <div class="line-inner-bottom">
+          <div class="policy-box">
+            <input
+            type="checkbox"
+            name="policy-check"
+            disabled
+            (ngModelChange)="updateAwardData()"
+            [(ngModel)]="award.policyRequested">
+             Policy requested
+          </div>
+        </div>
+      </div>
+      <div class="line line-total">
+        <div class="line-inner-left">
+          Total Credit
+        </div>
+        <div class="line-inner-right">
+          <span
+          class="credit-total"
+          [ngClass]="{
+            'credit-full': request.course.totalCreditHours === awardsTotal,
+            'credit-over': request.course.totalCreditHours < awardsTotal
+          }">
+            {{awardsTotal}} hour(s)
+          </span>
+        </div>
+        <div
+        class="credit-alert"
+        *ngIf="awardsTotal !== null &&  request.course.totalCreditHours < awardsTotal">
+          {{awardsTotal - request.course.totalCreditHours}} credit hour(s) in excess!
+        </div>
+      </div>
+    </div>
+    <div
+    class="box box-award"
+    *ngIf="courseFinder">
+      <div class="award-item subject">
+        <div class="item-label">
+          Subject
+        </div>
+        <select
+        class="form-control input-sm"
+        [(ngModel)]="courseFinder.subject.index"
+        (ngModelChange)="selectSubject($event)">
+          <option
+          [value]="i"
+          *ngFor="let subject of courseFinder.subject.list;
+          let i = index">
+            {{subject.code}}
+          </option>
+        </select>
+      </div>
+      <div class="award-item course">
+        <div class="item-label">
+          Course Number & Title
+        </div>
+        <select
+        class="form-control input-sm"
+        [(ngModel)]="courseFinder.course.index"
+        (ngModelChange)="selectGtCourse($event)">
+          <option disabled>Select</option>
+          <option
+          [value]="i"
+          *ngFor="let course of courseFinder.course.list;
+          let i = index">
+            {{course.number}} {{course.title}}
+          </option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <div
+  class="box-wrapper"
+  *ngIf="self.isDept">
+    <label>Awards</label>
+    <div class="box">
+      <div
+      class="line line-awarded"
+      *ngFor="let award of awards; let i = index">
+        <div class="line-inner-left">
+          <span
+          class="item-label"
+          *ngIf="!award.course.lab">
+            Course
+          </span>
+          <span class="item-label"
+          *ngIf="award.course.lab">
+            Lab
+          </span>
+          {{award.course.name}}
+        </div>
+        <div class="line-inner-right">
+          <div class="credit-selector">
+            <select
+            class="form-control input-xs select-input"
+            name="awardCreditOptions"
+            [(ngModel)]="award.credit"
+            (ngModelChange)="updateAwardData(); getAwardsTotal()">
+              <option
+              [value]="credit"
+              *ngFor="let credit of award.course.creditOptions">
+                {{credit}}
+              </option>
+            </select>
+          </div>
+          <!-- {{award.credit}} credit hour(s) -->
+          <span (click)="removeAward(i)">
+            <span class="glyphicon glyphicon-remove"></span>
+          </span>
+        </div>
+        <div class="line-inner-bottom">
+          <div class="policy-box">
+            <input
+            type="checkbox"
+            name="policy-check"
+            [(ngModel)]="award.policyRequested"
+            (ngModelChange)="updateAwardData()">
+             Make policy
+          </div>
+        </div>
+      </div>
+      <div class="line line-total">
+        <div class="line-inner-left">
+          Total Credit
+        </div>
+        <div class="line-inner-right">
+          <span
+          class="credit-total"
+          [ngClass]="{
+            'credit-full': request.course.totalCreditHours === awardsTotal,
+            'credit-over': request.course.totalCreditHours < awardsTotal
+          }">
+            {{awardsTotal}} hour(s)
+          </span>
+        </div>
+        <div
+        class="credit-alert"
+        *ngIf="awardsTotal !== null &&  request.course.totalCreditHours < awardsTotal">
+          {{awardsTotal - request.course.totalCreditHours}} credit hour(s) in excess!
+        </div>
+      </div>
+    </div>
+
+    <div
+    class="box box-award"
+    *ngIf="courseFinder">
+      <div class="award-item subject">
+        <div class="item-label">
+          Subject
+        </div>
+        <select
+        class="form-control input-sm"
+        [(ngModel)]="courseFinder.subject.index"
+        (ngModelChange)="selectSubject($event)">
+          <option
+          [value]="i"
+          *ngFor="let subject of courseFinder.subject.list;
+          let i = index">
+            {{subject.code}}
+          </option>
+        </select>
+      </div>
+      <div class="award-item course">
+        <div class="item-label">
+          Course Number & Title
+        </div>
+        <select
+        class="form-control input-sm"
+        [(ngModel)]="courseFinder.course.index"
+        (ngModelChange)="selectGtCourse($event)">
+          <option disabled>Select</option>
+          <option
+          [value]="i"
+          *ngFor="let course of courseFinder.course.list;
+          let i = index">
+            {{course.number}} {{course.title}}
+          </option>
+        </select>
+      </div>
+    </div>
+  </div>
+</div>

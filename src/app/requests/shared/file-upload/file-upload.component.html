@@ -1,0 +1,52 @@
+<div id="add-file-upload-component">
+  <div class="upload-input">
+    <div class="help-box">
+      <span class="required">Required!</span> Attach a syllabus or course-related document.
+      <br>.doc, .docx, .pdf, .png, .jpg, .jpeg. files no larger than 2MB.
+    </div>
+    <input multiple
+    type="file"
+    class="form-control input-sm"
+    accept=".doc,.docx,.pdf,.png,.jpg,.jpeg"
+    [disabled]="types.length == files.length"
+    (change)="onFileAdded($event.target.files)">
+  </div>
+  <div class="upload-display">
+    <div class="title">
+      <div class="type">
+        Type
+      </div>
+      <div class="filename">
+        Filename
+      </div>
+    </div>
+    <div class="type-list">
+      <bs-sortable
+      [(ngModel)]="types"
+      fieldName="name"
+      itemClass="type-item"
+      itemActiveClass="type-item-active"
+      wrapperClass="type-box"
+      (onChange)="isUploadReady()">
+      </bs-sortable>
+    </div>
+    <div class="filename-list">
+      <div class="file-box">
+        <div
+        class="file"
+        *ngFor="let file of files; let fileI = index">
+          <div class="filename">
+            {{file.file.name}}
+          </div>
+          <div class="remove"
+          (click)="remove(fileI)">
+            <span class="glyphicon glyphicon-trash"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="help-box">
+      Assign a type: drag and drop.
+    </div>
+  </div>
+</div>

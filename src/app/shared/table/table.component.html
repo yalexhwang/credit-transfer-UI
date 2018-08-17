@@ -1,0 +1,192 @@
+<div id="table-component">
+  <div class="options-wrapper">
+    <div
+    class="options-wrapper-inner
+    options-wrapper-inner-left">
+      <!-- Searchers -->
+      <div
+      class="option-item-wrapper"
+      id="searcher"
+      *ngIf="searchers">
+        <div dropdown
+        class="btn-group option-item"
+        *ngIf="!isSearcherSet">
+          <button dropdownToggle
+          type="button"
+          class="btn btn-sm btn-default
+          dropdown-toggle option-item-button">
+            <div>
+              Search
+            </div>
+            <div class="caret-box">
+              <span class="caret"></span>
+            </div>
+          </button>
+          <ul role="menu"
+          class="dropdown-menu option-item-menu">
+            <li role="menuitem"
+            (click)="setSearcher(i)"
+            *ngFor="let searcher of searchers.main.items;
+            let i = index">
+              <a>{{searcher.name}}</a>
+            </li>
+          </ul>
+        </div>
+        <!-- Selected searcher sub group -->
+        <div
+        class="option-item"
+        *ngIf="isSearcherSet">
+          <button
+          type="button"
+          class="btn btn-default btn-sm option-item-button">
+            <div>
+              {{searchers.main.items[searchers.main.setToIndex].name}}
+            </div>
+            <div
+            class="caret-box"
+            (click)="setSearcher(null)">
+              <span class="glyphicon glyphicon-remove"></span>
+            </div>
+          </button>
+        </div>
+        <!-- End of Selected searcher sub group -->
+        <!-- Search form -->
+        <div class="option-item-keyword-form">
+          <input
+          type="text"
+          class="form-control input-sm"
+          name="keyword"
+          placeholder="Search"
+          (ngModelChange)="search($event)"
+          [(ngModel)]="searchers.keyword">
+        </div>
+        <!-- End of Search form -->
+      </div>
+      <!-- End of Searchers -->
+
+      <!-- filters -->
+      <div class="option-item-wrapper" *ngIf="filters">
+        <!-- Main filter group -->
+        <div dropdown
+        class="btn-group option-item">
+          <button dropdownToggle
+          type="button"
+          class="btn btn-sm btn-default
+          dropdown-toggle option-item-button">
+            <div
+            class="inner-button"
+            *ngIf="!isFilterSet">
+              Filter
+              <span class="caret-box">
+                <span class="caret"></span>
+              </span>
+            </div>
+            <div
+            class="inner-button"
+             *ngIf="isFilterSet">
+              {{filters.main.items[filters.main.setToIndex].name}}
+              <span
+              class="caret-box"
+              (click)="setFilter(null)">
+                <span class="glyphicon glyphicon-remove"></span>
+              </span>
+            </div>
+          </button>
+          <ul role="menu"
+          class="dropdown-menu option-item-menu">
+            <li role="menuitem"
+            (click)="setFilter(i)"
+            *ngFor="let filter of filters.main.items;
+            let i = index">
+              <a>
+                {{filter.name}}
+              </a>
+            </li>
+          </ul>
+        </div>
+        <!-- End of Main filter group -->
+        <!-- Sub filter group -->
+        <div dropdown
+        class="btn-group option-item option-item-secondary"
+        *ngIf="isFilterSet && !isDatepickerSet">
+          <button dropdownToggle
+          type="button"
+          class="btn btn-sm btn-default
+          dropdown-toggle option-item-button">
+            <div *ngIf="!isSubFilterSet && !isDatepickerSet">
+              By
+            </div>
+            <div *ngIf="isSubFilterSet">
+              {{filters.sub.items[filters.sub.setToIndex].name}}
+            </div>
+            <div class="caret-box">
+              <span class="caret"></span>
+            </div>
+          </button>
+          <ul *dropdownMenu
+          role="menu"
+          class="dropdown-menu option-item-menu">
+            <li role="menuitem"
+            (click)="filter(i)"
+            *ngFor="let item of filters.sub.items; let i = index">
+              <a>
+                {{item.name}}
+              </a>
+            </li>
+          </ul>
+        </div>
+        <!-- End of Sub filter group -->
+        <!-- Selected Sub filter group: Datepicker -->
+        <div
+        class="option-item option-item-secondary"
+        *ngIf="isDatepickerSet">
+          <input bsDaterangepicker
+          type="text"
+          class="form-control input-sm"
+          id="datepicker"
+          placeholder="Start - End"
+          [(ngModel)]="filters.sub.setToValue"
+          [bsConfig]="bsConfig"
+          (bsValueChange)="filterByDate($event)">
+       </div>
+       <!-- End of Datepicker -->
+      </div>
+      <!-- End of filters -->
+    </div>
+    <div class="options-wrapper-inner options-wrapper-inner-right">
+      <div class="option-item-wrapper" *ngIf="sorters">
+        <div dropdown
+        class="btn-group option-item">
+          <button dropdownToggle
+          type="button"
+          class="btn btn-sm btn-default dropdown-toggle option-item-button">
+            <div>
+              Sort by
+              <strong>
+                {{sorters.items[sorters.setToIndex].name}}
+              </strong>
+            </div>
+            <div class="caret-box">
+              <span class="caret"></span>
+            </div>
+          </button>
+          <ul
+          role="menu"
+          class="dropdown-menu option-item-menu">
+            <li
+            role="menuitem"
+            (click)="sort(i)"
+            *ngFor="let sorter of sorters.items; let i = index">
+              <a>
+                {{sorter.name}}
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <app-table-box>
+  </app-table-box>
+</div>

@@ -1,0 +1,32 @@
+<div id="registrar-component" *ngIf="views">
+  <div class="component-title">
+    <div class="title">
+      {{views[currentViewIndex].name}}
+      <span class="description">
+        {{views[currentViewIndex].description}}
+      </span>
+    </div>
+
+    <div class="views">
+      <div
+      class="btn-group btn-group-sm"
+      role="group">
+        <button
+        type="button"
+        class="btn btn-default"
+        [ngClass]="{
+          'btn-primary': i === currentViewIndex
+        }"
+        (click)="setCurrentView(i)"
+        *ngFor="let view of views; let i = index">
+          {{view.name}}
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="component-content">
+    <app-table>
+    </app-table>
+  </div>
+
+</div>

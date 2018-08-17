@@ -1,0 +1,151 @@
+@import '~styles.scss';
+
+#list-component {
+  accordion-panel {
+    .panel-heading {
+      padding: 3px 10px;
+    }
+    .heading {
+      display: flex;
+      flex-flow: row nowrap;
+      justify-content: space-between;
+      align-items: center;
+
+      .title {
+        font-size: 18px;
+        display: flex;
+        flex-flow: row nowrap;
+        align-items: center;
+        .course {
+          font-size: 15px;
+          margin-left: 15px;
+        }
+      }
+      .standing {
+        display: flex;
+        flex-flow: row nowrap;
+        .turn-box {
+          display: flex;
+          flex-flow: row nowrap;
+          align-items: center;
+          margin-right: 15px;
+          font-size: 13px;
+        }
+        .status-box {
+          .queue {
+            line-height: 14px;
+            font-size: 12px;
+            font-family: $sub-font;
+            text-align: right;
+            color: $gtech-dark-grey;
+          }
+          .status {
+            font-size: 14px;
+          }
+        }
+      }
+    }
+    .content {
+      display: flex;
+      flex-flow: row nowrap;
+      .column-left {
+        width: 380px;
+        section {
+          display: flex;
+          flex-flow: row nowrap;
+          margin-bottom: 20px;
+          .inner-left {
+            margin-right: 10px;
+            padding-top: 1px;
+            .glyphicon {
+              font-size: 32px;
+              color: $bootstrap-grey;
+            }
+          }
+          .inner-right {
+            flex: auto;
+            .item {
+              .item-label {
+                font-family: $main-font;
+                font-size: 13px;
+                color: $bootstrap-grey;
+              }
+              .item-value {
+                font-size: 15px;
+                padding-left: 2px;
+              }
+            }
+          }
+          .horizontal {
+            display: flex;
+            flex-flow: row nowrap;
+            .item {
+              min-width: 150px;
+              margin-right: 20px;
+            }
+          }
+          .vertical {
+            display: flex;
+            flex-flow: column nowrap;
+            .item {
+              margin-bottom: 5px;
+              .item-label {
+                margin-bottom: -2px;
+              }
+              .item-value {
+                .doc {
+                  margin-right: 10px;
+                  font-size: 13px;
+                  a {
+                    text-decoration: none;
+                  }
+                }
+                .award {
+                  font-size: 13px;
+                  .award-title {
+                    .item-label {
+                      margin-right: 5px;
+                    }
+                  }
+                }
+                .award-total {
+                  border-top: 1px solid $lightest-grey;
+                  padding-top: 3px;
+                }
+                .final-status {
+                  font-weight: 500;
+                  border: 3px solid $bootstrap-red;
+                  border-radius: 4px;
+                  padding: 0px 3px;
+                  color: $bootstrap-red;
+                  margin-top: 3px;
+                }
+              }
+            }
+          }
+        }
+      }
+      .column-right {
+        flex: auto;
+        margin-left: 15px;
+        padding-left: 10px;
+        border-left: 1px solid $lightest-grey;
+        .title {
+          font-family: $main-font;
+          font-size: 13px;
+          color: $bootstrap-grey;
+        }
+      }
+    }
+    .action {
+      text-align: right;
+      margin-right: 10px;
+      margin-bottom: 10px;
+    }
+  }
+  .pagination-wrapper {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+  }
+}

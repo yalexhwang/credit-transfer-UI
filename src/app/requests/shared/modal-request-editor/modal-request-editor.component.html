@@ -1,0 +1,442 @@
+<div id="modal-request-editor">
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">
+      New Request
+    </h4>
+    <button
+    type="button"
+    class="close pull-right"
+    aria-sub-label="Close"
+    (click)="modalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+
+  <div
+  class="modal-body info-box"
+  *ngIf="!alertChecked">
+    <app-info-box
+    (confirmed)="closeInfoBox($event)"
+    [info]="infoBox">
+    </app-info-box>
+  </div>
+
+  <div
+  class="modal-body"
+  *ngIf="alertChecked">
+    <form
+    novalidate
+    [formGroup]="courseForm"
+    *ngIf="options">
+      <div class="prop-group">
+        <div class="name">
+          School
+        </div>
+        <div class="content">
+          <input readonly
+          type="text"
+          name="school"
+          class="form-control input-sm school-name-input"
+          [ngClass]="{
+            'btn-danger': courseForm.get('schoolID').errors && courseForm.get('schoolID').touched
+          }"
+          [value]="school.name"
+          (click)="selectSchool()"
+          formControlName="schoolID">
+        </div>
+      </div>
+      <div class="prop-group prop-group-lab-check">
+        <div class="name">
+        </div>
+        <div class="content">
+          <div class="checkbox">
+            <label>
+              <input
+              type="checkbox"
+              formControlName="hasLab"> has lab
+            </label>
+          </div>
+        </div>
+      </div>
+      <div class="prop-group">
+        <div class="name with-sub-label">
+          Course
+        </div>
+        <div class="content">
+          <div class="content-input">
+            <div
+            class="content-item prefix-item"
+            [ngClass]="{
+              'has-error': courseForm.get('prefix').errors && courseForm.get('prefix').touched
+            }">
+              <span class="sub-label">Prefix</span>
+              <input
+              type="text"
+              class="form-control input-sm"
+              name="prefix"
+              placeholder="ENG"
+              formControlName="prefix">
+            </div>
+            <div
+            class="content-item number-item"
+            [ngClass]="{
+              'has-error': courseForm.get('number').errors && courseForm.get('number').touched
+            }">
+              <span class="sub-label">Number</span>
+              <input
+              type="text"
+              class="form-control input-sm"
+              name="number"
+              placeholder="101"
+              formControlName="number">
+            </div>
+            <div
+            class="content-item title-item"
+            [ngClass]="{
+              'has-error': courseForm.get('title').errors && courseForm.get('title').touched
+            }">
+              <span class="sub-label">Title</span>
+              <input
+              type="text"
+              class="form-control input-sm"
+              name="title"
+              placeholder="Intro to English Writing"
+              formControlName="title">
+            </div>
+          </div>
+          <div class="content-display">
+            <span
+            class="error"
+            *ngIf="(courseForm.get('prefix').hasError('required') && courseForm.get('prefix').touched)
+              || (courseForm.get('number').hasError('required') && courseForm.get('number').touched)
+              || (courseForm.get('title').hasError('required') && courseForm.get('title').touched)">
+              Required!
+            </span>
+          </div>
+        </div>
+      </div>
+      <div
+      class="prop-group lab-group"
+      [formGroup]="labForm"
+      *ngIf="courseForm.get('hasLab').value">
+        <div class="name">
+          Lab
+        </div>
+        <div class="content">
+          <div class="content-input">
+            <div
+            class="content-item prefix-item"
+            [ngClass]="{
+              'has-error': labForm.get('prefix').errors && labForm.get('prefix').touched
+            }">
+              <span class="sub-label">Prefix</span>
+              <input
+              type="text"
+              class="form-control input-sm"
+              name="prefix"
+              formControlName="prefix">
+            </div>
+            <div
+            class="content-item number-item"
+            [ngClass]="{
+              'has-error': labForm.get('number').errors && labForm.get('number').touched
+            }">
+              <span class="sub-label">Number</span>
+              <input
+              type="text"
+              class="form-control input-sm"
+              name="number"
+              formControlName="number">
+            </div>
+            <div
+            class="content-item title-item"
+            [ngClass]="{
+              'has-error': labForm.get('title').errors && labForm.get('title').touched
+            }">
+              <span class="sub-label">Title</span>
+              <input
+              type="text"
+              class="form-control input-sm"
+              name="title"
+              formControlName="title">
+            </div>
+          </div>
+          <div class="content-display">
+            <span
+            class="error"
+            *ngIf="(labForm.get('prefix').hasError('required')
+              && labForm.get('prefix').touched)
+              || (labForm.get('number').hasError('required') && labForm.get('number').touched)
+              || (labForm.get('title').hasError('required') && labForm.get('title').touched)">
+              Required!
+            </span>
+          </div>
+          <div class="same-box">
+            <div class="checkbox">
+              <label>
+                <input
+                type="checkbox"
+                name="same"
+                (change)="onSameAsAbove($event.target.checked)"> Same as above
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="prop-group">
+        <div class="name with-sub-label">
+          Taken
+        </div>
+        <div class="content">
+          <div class="content-input">
+            <div
+            class="content-item season"
+            [ngClass]="{
+              'has-error': courseForm.get('season').errors && courseForm.get('season').touched
+            }">
+              <span class="sub-label">Season</span>
+              <select
+              class="form-control input-sm"
+              name="season"
+              formControlName="season">
+                <option disabled></option>
+                <option
+                [value]="season"
+                *ngFor="let season of options.season">
+                  {{season}}
+                </option>
+              </select>
+            </div>
+            <div
+            class="content-item term"
+            [ngClass]="{
+              'has-error': courseForm.get('term').errors && courseForm.get('term').touched
+            }">
+              <span class="sub-label">Term</span>
+              <select #termOptions
+              class="form-control input-sm"
+              name="term"
+              (change)="onTermSelected($event.target.value)">
+                <option disabled></option>
+                <option
+                [value]="term"
+                *ngFor="let term of options.term">
+                  {{term}}
+                </option>
+                <option value="Other">Other</option>
+              </select>
+              <div
+              class="term-manual-input"
+              [ngClass]="{
+                'has-error': courseForm.get('term').invalid
+              }"
+              *ngIf="termOptions.value === 'Other'">
+                <input
+                type="text"
+                class="form-control input-sm "
+                name="term-manual"
+                placeholder="Enter"
+                formControlName="term">
+              </div>
+            </div>
+            <div
+            class="content-item year"
+            [ngClass]="{
+              'has-error': courseForm.get('year').errors && courseForm.get('year').touched
+            }">
+              <span class="sub-label">Year</span>
+              <select
+              class="form-control input-sm"
+              name="year"
+              formControlName="year">
+                <option disabled></option>
+                <option
+                [value]="year"
+                *ngFor="let year of options.year">
+                  {{year}}
+                </option>
+              </select>
+            </div>
+          </div>
+          <div class="content-display">
+            <span
+            class="error"
+            *ngIf="(courseForm.get('season').hasError('required')
+              && courseForm.get('season').touched)
+              || (courseForm.get('term').hasError('required') && courseForm.get('term').touched)
+              || (courseForm.get('year').hasError('required') && courseForm.get('year').touched)">
+              Required
+            </span>
+          </div>
+        </div>
+      </div>
+      <div class="prop-group prop-group-credit">
+        <div class="name">
+          Credits
+        </div>
+        <div class="content">
+          <div class="content-input">
+            <div class="content-item credit-item horizontal"
+            [ngClass]="{
+              'has-error': courseForm.get('credit').errors && courseForm.get('credit').touched
+            }"
+            [formGroup]="courseForm">
+              <span
+              class="sub-label label-horizontal"
+              *ngIf="hasLab">
+                Course
+              </span>
+              <input
+              class="form-control input-sm credit-input"
+              type="number"
+              min="1"
+              max="15"
+              formControlName="credit">
+              <span class="credit-label">hour(s)</span>
+            </div>
+            <div
+            class="content-item credit-item horizontal"
+            [ngClass]="{
+              'has-error': labForm.get('credit').errors && labForm.get('credit').touched
+            }"
+            [formGroup]="labForm"
+            *ngIf="courseForm.get('hasLab').value">
+              <span class="sub-label label-horizontal">
+                Lab
+              </span>
+              <input
+              class="form-control input-sm credit-input"
+              type="number"
+              min="1"
+              max="15"
+              formControlName="credit">
+              <span class="credit-label">hour(s)</span>
+            </div>
+          </div>
+          <div class="content-display">
+            <span
+            class="error"
+            *ngIf="(courseForm.get('credit').hasError('required') && courseForm.get('credit').touched)
+              || labForm.get('credit').hasError('required') && labForm.get('credit').touched">
+              Required
+            </span>
+            <span
+            class="error"
+            *ngIf="((courseForm.get('credit').hasError('min') || courseForm.get('credit').hasError('max'))&& courseForm.get('credit').touched)
+              || (labForm.get('credit').hasError('min') || labForm.get('credit').hasError('max')) && labForm.get('credit').touched">
+              Credits must be bigger than 0 and cannot exceed 15
+            </span>
+          </div>
+        </div>
+      </div>
+      <hr>
+      <div
+      class="prop-group"
+      [formGroup]="courseForm">
+        <div class="name">
+          Equivalent sought
+        </div>
+        <div class="content">
+          <div class="content-input">
+            <div class="content-item horizontal">
+              <select
+              class="form-control input-sm sought-subject-input"
+              name="subject"
+              formControlName="equivSubjectID">
+                <option value="0" disabled>Select</option>
+                <option
+                [value]="subject.id"
+                *ngFor="let subject of options.subject">
+                  {{subject.code}}
+                </option>
+              </select>
+              <input
+              class="form-control input-sm"
+              type="number"
+              name="equivNumber"
+              min="1000"
+              max="4999"
+              formControlName="equivNumber">
+            </div>
+            <div class="content-item link-item">
+              <div class="link">
+                <a
+                href="http://www.catalog.gatech.edu/courses-undergrad/"
+                target="_blank">
+                  <span class="glyphicon glyphicon-list-alt"></span>
+                  Course Catalog
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="help-box">
+          Optional: you may specify a GT course you wish to be awarded.
+          <br>
+          See Course Catalog for the list of current GT courses.
+        </div>
+      </div>
+    </form>
+    <hr>
+    <div class="prop-group">
+      <div class="name">
+        Documents
+      </div>
+      <div class="content">
+        <app-file-upload
+        [hasLab]="courseForm.get('hasLab').value"
+        (fileReady)="notifyFileStatus($event)">
+        </app-file-upload>
+      </div>
+    </div>
+    <hr>
+    <div
+    class="prop-group prop-group-admission"
+    [formGroup]="courseForm">
+      <div class="name">
+        Admission
+      </div>
+      <div class="content">
+        <div
+        class="content-input"
+        [ngClass]="{
+          'has-error': courseForm.get('admission').errors}">
+          <label class="radio-inline">
+            <input
+            type="radio"
+            name="admission"
+            [value]="true"
+            formControlName="admission"> Required
+          </label>
+          <label class="radio-inline">
+            <input
+            type="radio"
+            name="admission"
+            [value]="false"
+            formControlName="admission"> Not required
+          </label>
+        </div>
+        <div class="content-display">
+          <span
+          class="error"
+          *ngIf="courseForm.get('admission').errors && courseForm.get('admission').touched">
+            Required
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-footer">
+    <button
+    type="button"
+    class="btn btn-default"
+    [disabled]="courseForm.invalid
+      || (labForm.invalid && courseForm.get('hasLab').value)
+      || files.length === 0"
+    (click)="submit()"
+    *ngIf="alertChecked">
+      Submit
+    </button>
+  </div>
+</div>

@@ -1,0 +1,61 @@
+.modal-body {
+  padding: 20px 25px;
+  .groups {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-around;
+    margin: 0px 110px 10px 110px;
+  }
+  .school-box {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    .school-group-list {
+      flex: 1;
+    }
+    .school-list {
+      flex: 2;
+    }
+    .list {
+      margin-right: 10px;
+      .sub-label {
+        margin-left: 3px;
+        font-size: 12px;
+      }
+      .select-list {
+
+      }
+    }
+
+  }
+  .enter-box {
+    margin-top: 25px;
+    form {
+      .form-group {
+        display: flex;
+        flex-flow: row nowrap;
+        align-items: center;
+        .manual-entry {
+          margin-top: 10px;
+          .check-box {
+            font-size: 12px;
+          }
+        }
+        .item-group {
+          display: flex;
+          flex-flow: row nowrap;
+          justify-content: space-between;
+          .item {
+            flex: 1;
+            .sub-label {
+              font-size: 12px;
+            }
+          }
+          .item-city, .item-state {
+            margin-right: 5px;
+          }
+        }
+      }
+    }
+  }
+}

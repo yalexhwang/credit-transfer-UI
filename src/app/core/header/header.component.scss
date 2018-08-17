@@ -1,0 +1,41 @@
+@import '~styles.scss';
+
+#header-component {
+  width: 100%;
+  background-color: $lightest-grey;
+  .header-wrapper {
+    max-width: $main-width;
+    margin: auto;
+    display: flex;
+    flex-flow: row nowrap;
+    .header-left {
+      width: 50%;
+      justify-content: flex-start;
+    }
+    .header-right {
+      width: 50%;
+      justify-content: flex-end;
+    }
+    .header {
+      display: flex;
+      flex-flow: row nowrap;
+      .header-menu {
+        width: 80px;
+        height: 35px;
+        display: flex;
+        flex-flow: row nowrap;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        font-family: $main-font;
+        font-size: $heading-size;
+        font-weight: 500;
+      }
+      .current {
+        background-color: white;
+        font-weight: 700;
+      }
+    }
+
+  }
+}

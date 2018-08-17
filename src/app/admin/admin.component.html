@@ -1,0 +1,36 @@
+<div id="admin-component">
+  <div class="title-section">
+    <div class="title">
+      <div class="sub-title">
+        Admin Board
+      </div>
+      <div class="main-title">
+        {{adminBoards[currentBoardIndex].title}}
+      </div>
+    </div>
+    <div class="menu">
+      <div
+      class="menu-item"
+      *ngFor="let board of adminBoards; let i = index">
+        <button
+        class="btn btn-default btn-block"
+        [ngClass]="{'active': i === currentBoardIndex}"
+        type="button"
+        (click)="selectBoard(i)">
+          {{board.title}}
+        </button>
+      </div>
+    </div>
+    <div class="misc">
+
+    </div>
+  </div>
+  <div class="board-section">
+    <app-dashboard
+    [self]="self"
+    *ngIf="currentBoardIndex === 0">
+    </app-dashboard>
+
+  </div>
+
+</div>

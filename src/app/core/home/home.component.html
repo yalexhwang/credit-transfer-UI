@@ -1,0 +1,8 @@
+<div id="home-component" *ngIf="self">
+  <app-header
+  [self]="self">
+  </app-header>
+  <div class="main">
+    <router-outlet></router-outlet>
+  </div>
+</div>

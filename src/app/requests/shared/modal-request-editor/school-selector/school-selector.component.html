@@ -1,0 +1,188 @@
+<div class="modal-header">
+  <h4 class="modal-title pull-left">Select School</h4>
+  <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div
+class="modal-body"
+*ngIf="currentGroup">
+  <div class="groups">
+    <button
+    type="button"
+    class="btn btn-default"
+    [ngClass]="{'btn-primary': group.name === currentGroup.name}"
+    (click)="onSelectSchoolGroup(i)"
+    *ngFor="let group of schoolGroups; let i = index">
+      {{group.name}}
+    </button>
+  </div>
+
+  <div
+  class="school-box"
+  *ngIf="!openManualEntry">
+    <div class="school-group-list list">
+      <div class="sub-label">
+        {{currentGroup.label | titlecase}}
+      </div>
+      <div class="select-box">
+        <select
+        class="form-control input-sm"
+        (change)="onSelectItem($event.target.value)">
+          <option disabled>Select</option>
+          <option
+          [value]="item"
+          *ngFor="let item of currentGroup.items">
+            {{item}}
+          </option>
+        </select>
+      </div>
+    </div>
+    <div class="school-list list">
+      <div class="sub-label">
+        School
+      </div>
+      <div class="select-box">
+        <select
+        class="form-control input-sm"
+        (change)="onSelectSchool($event.target.value)">
+          <option disabled>Select</option>
+          <option
+          [value]="i"
+          *ngFor="let school of schools; let i = index">
+            {{school.name}} - {{school.city}}
+          </option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <div
+  class="enter-box"
+  *ngIf="openManualEntry">
+    <form novalidate
+    class="form-horizontal"
+    [formGroup]="manualForm"
+    (ngSubmit)="submit(manualForm.value)">
+      <div class="form-group">
+        <label class="col-sm-2 control-label">
+          Country
+        </label>
+        <div class="col-sm-9">
+          <select
+          class="form-control input-sm"
+          [ngClass]="{
+            'has-error': manualForm.get('country').errors && manualForm.get('country').touched
+          }"
+          name="manual-country"
+          formControlName="country"
+          *ngIf="!manualForm.get('countryNotListed').value">
+            <option
+            [value]="country"
+            *ngFor="let country of schoolGroups[2].items">
+              {{country}}
+            </option>
+          </select>
+          <input
+          class="form-control input-sm"
+          type="text"
+          name="manual-country"
+          placeholder="Enter"
+          formControlName="country"
+          *ngIf="manualForm.get('countryNotListed').value">
+          <div class="manual-entry">
+            <div class="check-box">
+              <input
+              type="checkbox"
+              name="manual-contry"
+              formControlName="countryNotListed"> Country not listed
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-2 control-label">Location</label>
+        <div class="col-sm-9 item-group">
+          <div class="item item-city">
+            <div class="sub-label">
+              City
+            </div>
+            <input
+            type="text"
+            class="form-control input-sm"
+            name="manual-city"
+            formControlName="city">
+          </div>
+          <div class="item item-state">
+            <div class="sub-label">
+              State
+            </div>
+            <select
+            class="form-control input-sm"
+            name="manual-state"
+            formControlName="state"
+            *ngIf="manualForm.get('country').value === 'USA'">
+              <option disabled>Select</option>
+              <option
+              [value]="state"
+              *ngFor="let state of schoolGroups[0].items">
+                {{state}}
+              </option>
+            </select>
+            <input
+            type="text"
+            class="form-control input-sm"
+            name="manual-state"
+            formControlName="state"
+            *ngIf="manualForm.get('country').value !== 'USA'">
+          </div>
+          <div class="item">
+            <div class="sub-label">
+              Zip Code
+            </div>
+            <input
+            type="text"
+            class="form-control input-sm"
+            name="manual-zipcode"
+            formControlName="zipcode">
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-2 control-label">Name</label>
+        <div
+        class="col-sm-9"
+        [ngClass]="{
+          'has-error': manualForm.get('name').errors && manualForm.get('name').touched
+        }">
+          <input
+          type="text"
+          class="form-control input-sm"
+          name="schoolName"
+          formControlName="name">
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-9">
+          <button
+          type="submit"
+          class="btn btn-default"
+          name="button"
+          [disabled]="manualForm.invalid">
+            Submit
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="modal-footer">
+  <button
+  type="button"
+  class="btn btn-default"
+  (click)="confirm()"
+  [disabled]="!school">
+    Confirm
+  </button>
+</div>

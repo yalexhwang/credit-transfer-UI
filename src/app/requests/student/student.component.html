@@ -1,0 +1,21 @@
+<div class="component-title">
+  <div class="title">My Requests</div>
+  <button
+  type="button"
+  class="btn btn-default"
+  (click)="addRequest()">
+    Add New
+  </button>
+</div>
+<div class="component-content">
+  <div
+  class="alert alert-warning"
+  *ngIf="requests.length === 0">
+    You do not have any request.
+  </div>
+  <app-list
+  [requests]="requests"
+  (requestSelected)="passRequestToModal($event)"
+  *ngIf="requests.length > 0">
+  </app-list>
+</div>

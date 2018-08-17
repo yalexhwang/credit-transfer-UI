@@ -1,0 +1,64 @@
+/* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css?family=Open+Sans|Roboto:300,400,400i,500,700');
+
+$gtech-dark-grey: #545454;
+$gtech-yellow: #eeb211;
+$lightest-grey: #eeeeee;
+$paper-color: #F5F5F5;
+
+$bootstrap-grey: #777777;
+$bootstrap-light-grey: #DDDDDD;
+$bootstrap-blue: #007BB3;
+$bootstrap-light-blue: #24C1DC;
+$bootstrap-yellow: #FCAC5B;
+$bootstrap-light-yellow: #FEF8E5;
+$bootstrap-red: #B44444;
+$bootstrap-light-red: #F6DEDE;
+$bootstrap-green: #44B665;
+
+$main-font: 'Roboto', sans-serif;
+$sub-font: 'Open Sans', sans-serif;
+$heading-size: 15px;
+
+$main-width: 900px;
+
+@keyframes fadein {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@-moz-keyframes fadein {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@-webkit-keyframes fadein {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@-ms-keyframes fadein {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@-o-keyframes fadein {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}

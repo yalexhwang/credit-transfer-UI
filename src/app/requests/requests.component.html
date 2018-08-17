@@ -1,0 +1,14 @@
+<div id="requests-component" *ngIf="self">
+  <app-registrar
+  *ngIf="self.isRegistrar">
+  </app-registrar>
+
+  <app-department
+  *ngIf="self.isDept">
+  </app-department>
+
+  <app-student
+  [self]="self"
+  *ngIf="self.isStudent">
+  </app-student>
+</div>

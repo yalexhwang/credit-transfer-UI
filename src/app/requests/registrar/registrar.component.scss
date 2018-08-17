@@ -1,0 +1,32 @@
+@import '~styles.scss';
+
+#registrar-component {
+  .component-title {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 15px;
+    .title {
+      font-size: 18px;
+      font-weight: 500;
+      .description {
+        margin-left: 5px;
+        font-size: 12px;
+        font-weight: 400;
+      }
+    }
+    .views {
+    }
+  }
+
+  .component-content {
+    margin-top: 10px;
+    border: 1px solid $lightest-grey;
+    border-radius: 5px;
+    padding: 10px;
+    .alert {
+      margin-bottom: 0px;
+    }
+  }
+}

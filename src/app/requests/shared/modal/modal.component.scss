@@ -1,0 +1,70 @@
+@import '~styles.scss';
+
+#modal-component {
+  .modal-body {
+    textarea {
+      resize: vertical;
+    }
+
+    .info {
+      width: 400px;
+      margin: auto;
+      display: flex;
+      flex-flow: row nowrap;
+      align-items: center;
+      font-size: 13px;
+      padding: 0px 5px 10px 5px;
+      .icon-box {
+        width: 35px;
+        font-size: 25px;
+        color: $bootstrap-red;
+      }
+      .note {
+        font-weight: 500;
+      }
+    }
+
+    .actions {
+      .active {
+        margin-bottom: 5px;
+      }
+      .static {
+        display: flex;
+        flex-flow: row nowrap;
+        justify-content: space-between;
+        margin-top: 5px;
+        .static-button {
+          width: 186px;
+        }
+      }
+    }
+
+    .action {
+      margin: 0px 20px;
+      .sub-options {
+        display: flex;
+        flex-flow: column nowrap;
+        .button-wrapper {
+          text-align: center;
+          margin-bottom: 5px;
+          button {
+            width: 160px;
+          }
+        }
+
+      }
+      .selector {
+        .selector1 {
+          margin-bottom: 10px;
+        }
+      }
+      .textbox {
+        margin-top: 10px;
+      }
+    }
+
+    /* input[readonly].readonly {
+      background-color: #fff;
+    } */
+  }
+}

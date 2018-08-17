@@ -1,0 +1,23 @@
+@import '~styles.scss';
+
+#info-box-component {
+  padding: 10px 15px;
+  background-color: $bootstrap-light-yellow;
+  border: 1px solid $gtech-yellow;
+  border-radius: 5px;
+  .title {
+    font-weight: 500;
+  }
+  .detail {
+    margin: 5px 0px 10px 0px;
+    font-size: 13px;
+    color: $gtech-dark-grey;
+    .link {
+      font-weight: 500;
+      margin-top: 5px;
+      a {
+        text-decoration: none;
+      }
+    }
+  }
+}

@@ -1,0 +1,103 @@
+@import '~styles.scss';
+
+#evaluator-component {
+  margin-bottom: 20px;
+  .box-wrapper {
+    margin-bottom: 20px;
+    .box {
+      font-size: 13px;
+      .line {
+        display: flex;
+        flex-flow: row wrap;
+        justify-content: space-between;
+        align-items: center;
+        margin: 2px 0px;
+        padding: 0px 2px;
+        .line-inner-left {
+          flex: auto;
+          .item-label {
+            color: $bootstrap-grey;
+            width: 45px;
+          }
+        }
+        .line-inner-right {
+          min-width: 50px;
+          text-align: right;
+          display: flex;
+          flex-flow: row wrap;
+          align-items: center;
+          justify-content: flex-end;
+        }
+        .equiv-sought {
+          font-weight: 500;
+        }
+        .line-inner-bottom {
+          width: 100%;
+          .policy-box {
+            font-size: 12px;
+            font-style: italic;
+            margin-left: 10px;
+            margin-top: -3px;
+          }
+        }
+      }
+      .line-requested  {
+        width: 485px;
+      }
+      .line-awarded {
+        margin-bottom: 3px;
+        .credit-selector {
+          .select-input {
+            width: 45px;
+            height: 26px;
+          }
+          padding-right: 5px;
+        }
+      }
+      .line-total {
+        margin-top: 5px;
+        border-top: 1px solid $lightest-grey;
+        padding-top: 5px;
+        .credit-total {
+          font-weight: 500;
+        }
+        .credit-full {
+          color: $bootstrap-blue;
+        }
+        .credit-over {
+          color: $bootstrap-red;
+        }
+        .credit-alert {
+          width: 100%;
+          color: $bootstrap-red;
+          text-align: right;
+          font-size: 11px;
+        }
+      }
+    }
+
+    .box-award {
+      display: flex;
+      flex-flow: row nowrap;
+      margin: 15px 0px;
+      padding: 7px;
+      background-color: $paper-color;
+      border-radius: 5px;
+      .award-item {
+        margin-right: 10px;
+        .item-label {
+          margin-left: 3px;
+          font-size: 11px;
+          color: $bootstrap-grey;
+          margin-bottom: 2px;
+        }
+      }
+      .subject {
+        flex: 1;
+      }
+      .course {
+        flex: 4;
+      }
+    }
+  }
+}

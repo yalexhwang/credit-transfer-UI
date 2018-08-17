@@ -1,0 +1,93 @@
+@import '~styles.scss';
+
+#add-file-upload-component {
+  width: 100%;
+  max-width:  448px;
+  .upload-input {
+
+  }
+  .upload-display {
+    display: flex;
+    flex-flow: row wrap;
+    font-size: 12px;
+    margin-top: 10px;
+    .title {
+      width: 100%;
+      display: flex;
+      flex-flow: row nowrap;
+      font-size: 11px;
+      color: grey;
+      margin-bottom: 5px;
+      .type {
+        width: 113px;
+        border-bottom: 1px solid #DDDDDD;
+      }
+      .filename {
+        width: 340px;
+        margin-left: 10px;
+        border-bottom: 1px solid #DDDDDD;
+      }
+    }
+    .type-list {
+      width: 113px;
+      .type-box {
+        .type-item {
+          display: flex;
+          flex-flow: row nowrap;
+          justify-content: center;
+          align-items: center;
+          height: 20px;
+          width: 113px;
+          margin-bottom: 3px;
+          background-color: #428BCA;
+          color: white;
+          border-radius: 3px;
+          box-sizing: border-box;
+          cursor: pointer;
+        }
+        .type-item-active {
+          background-color: white;
+          color: #428BCA;
+          border: 1px solid #428BCA;
+        }
+      }
+    }
+    .filename-list {
+      width: 320px;
+      margin-left: 10px;
+      .file-box {
+        display: flex;
+        flex-flow: column nowrap;
+        .file {
+          display: flex;
+          flex-flow: row nowrap;
+          align-items: center;
+          height: 20px;
+          width: 320px;
+          margin-bottom: 3px;
+          .filename {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+          }
+          .remove {
+            cursor: pointer;
+            margin-top: 2px;
+            margin-left: 5px;
+            font-size: 14px;
+          }
+        }
+      }
+    }
+  }
+  .help-box {
+    margin-bottom: 5px;
+    padding-left: 3px;
+    font-size: 12px;
+    color: $bootstrap-grey;
+    .required {
+      font-size: 13px;
+      color: $bootstrap-red;
+    }
+  }
+}

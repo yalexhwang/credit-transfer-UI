@@ -1,0 +1,22 @@
+@import '~styles.scss';
+
+.component-title {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  align-items: center;
+  .title {
+    font-size: 16px;
+    font-weight: 500;
+  }
+}
+
+.component-content {
+  margin-top: 10px;
+  border: 1px solid $lightest-grey;
+  border-radius: 5px;
+  padding: 10px;
+  .alert {
+    margin-bottom: 0px;
+  }
+}

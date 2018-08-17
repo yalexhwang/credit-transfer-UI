@@ -1,0 +1,151 @@
+<div id="modal-component">
+  <div class="modal-body" *ngIf="request && self">
+    <div class="modal-nav">
+      <ol class="breadcrumb">
+        <li *ngIf="!action">
+          Request ID {{request.id}}
+        </li>
+        <li *ngIf="action">
+          <a (click)="selectAction(null)">
+            Request ID {{request.id}}
+          </a>
+        </li>
+        <li *ngIf="action">
+          {{action.key}}
+        </li>
+      </ol>
+    </div>
+
+    <div
+    class="info"
+    *ngIf="infoLog">
+      <div class="icon-box">
+        <span class="glyphicon glyphicon-warning-sign"></span>
+      </div>
+      <div class="item-box">
+        {{infoLog.main}}
+        <div
+        class="note"
+        *ngIf="infoLog.note">
+          "{{infoLog.note}}"
+        </div>
+      </div>
+    </div>
+
+    <div class="actions"
+    *ngIf="!action">
+      <div class="active">
+        <button
+        type="button"
+        class="btn btn-default btn-block"
+        [disabled]="disableOption(option.id)"
+        (click)="selectAction(option)"
+        *ngFor="let option of options.active; let i = index">
+          {{option.key}}
+        </button>
+      </div>
+      <div class="active"
+      *ngIf="!self.isRegistrar">
+        <button
+        type="button"
+        class="btn btn-default btn-block"
+        [disabled]="disableOption(option.id)"
+        (click)="selectAction(option)"
+        *ngFor="let option of options.static; let i = index">
+          {{option.key}}
+        </button>
+      </div>
+      <div
+      class="static"
+      *ngIf="self.isRegistrar">
+        <button
+        type="button"
+        class="btn btn-default static-button"
+        (click)="selectAction(option)"
+        *ngFor="let option of options.static; let i = index">
+          {{option.key}}
+        </button>
+      </div>
+    </div>
+
+    <div
+    class="action"
+    *ngIf="action">
+
+      <div class="sub-options"
+      *ngIf="display === 'sub-options'">
+        <div
+        class="button-wrapper"
+        *ngFor="let option of action.subs; let i = index">
+          <button
+          type="button"
+          class="btn btn-default static-button"
+          (click)="submitWithSubOption(option)">
+            {{option.key}}
+          </button>
+        </div>
+
+      </div>
+
+      <div class="evaluatorr"
+      *ngIf="display === 'evaluator'">
+        <app-evaluator
+        [self]="self"
+        [request]="request"
+        (awardDataUpdated)="receiveAwardData($event)">
+        </app-evaluator>
+      </div>
+
+
+      <div class="selector"
+      *ngIf="display === 'selector'">
+        <div
+        class="selector1"
+        *ngIf="self.isRegistrar">
+          <label>{{selector1.label}}</label>
+          <select
+          class="form-control"
+          (change)="setSelector2Items($event.target.value)">
+            <option disabled>Select</option>
+            <option
+            [value]="i"
+            *ngFor="let item of selector1.items; let i = index">
+              {{item.name}}
+            </option>
+          </select>
+        </div>
+        <div class="selector2">
+          <label>{{selector2.label}}</label>
+          <select
+          class="form-control"
+          (change)="setActionDataFromSelector2($event.target.value)">
+            <option>Select</option>
+            <option
+            [value]="i"
+            *ngFor="let item of selector2.items; let i = index">
+              {{item.name}}
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <div
+      class="textbox"
+      *ngIf="action">
+        <label>Note</label>
+        <textarea
+        class="form-control"
+        rows="3"
+        [(ngModel)]="note"
+        (ngModelChange)="checkIfSubmitReady(actionData)">
+        </textarea>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-footer">
+    <button type="button" class="btn btn-default"
+      [disabled]="!submitReady"
+      (click)="submit()">Submit</button>
+  </div>
+</div>

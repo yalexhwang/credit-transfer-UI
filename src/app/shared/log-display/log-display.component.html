@@ -1,0 +1,70 @@
+<div id="log-display-component">
+  <div
+  class="display-wrapper"
+  [ngClass]="{
+    'vertical-display-wrapper': layout === 'vertical',
+    'horizontal-display-wrapper': layout === 'horizontal'
+  }">
+    <div class="display display-title">
+      <div class="heading">
+        Step
+      </div>
+      <div class="content">
+        Activities
+      </div>
+    </div>
+    <div class="display"
+    *ngFor="let display of displays; let i = index">
+      <div class="heading">
+        <div class="key">
+          {{display.key}}
+        </div>
+      </div>
+      <div class="content">
+        <div class=""
+        *ngIf="display.logs.length === 0">
+          -
+        </div>
+        <div class="log-box"
+        *ngFor="let log of display.logs">
+          <div class="top">
+            <span class="descripiton">
+              {{log.description}}
+            </span>
+            <div class="date">
+              {{log.date | date:'EEE'}}
+              {{log.date | date:'shortDate'}}
+              {{log.date | date:'shortTime'}}
+            </div>
+          </div>
+          <div
+          class="bottom"
+          *ngIf="log.detail">
+            <div class="icon-box">
+              <span class="glyphicon glyphicon-list-alt"></span>
+            </div>
+            <div class="text-box">
+              <div
+              class="detail"
+              *ngFor="let item of log.detail">
+                {{item}}
+              </div>
+            </div>
+          </div>
+          <div
+          class="bottom"
+          *ngIf="log.note">
+            <div class="icon-box">
+              <span class="glyphicon glyphicon-comment"></span>
+            </div>
+            <div class="text-box">
+              <div class="note">
+                {{log.note}}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

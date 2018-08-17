@@ -1,0 +1,140 @@
+<div id="table-box-component">
+  <div class="table-wrapper">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>
+            ID
+          </th>
+          <th>
+            Request Snapshot
+          </th>
+          <th>
+            Student
+          </th>
+          <th class="centered-col">
+            Staff
+          </th>
+          <th class="centered-col">
+            Admission
+          </th>
+          <th class="centered-col">
+            Queue
+          </th>
+          <th class="centered-col status">
+            Status
+          </th>
+          <th class="centered-col">
+            Turn
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr
+        class="request"
+        [ngClass]="{'danger': request.markAlert }"
+        (click)="goToRequest(i)"
+        *ngFor="let request of currentList; let i = index">
+          <td>
+            {{request.id}}
+            <div class="small-text">
+              Step {{request.stepID}}
+            </div>
+          </td>
+          <td>
+            {{request.course.name}}
+            <span
+            *ngIf="request.course.lab">
+              with lab
+            </span>
+            : {{request.course.totalCreditHours}} credit hours
+            <span class="small-text">
+              {{request.course.school.name}}
+            </span>
+          </td>
+          <td>
+            {{request.student.name}}
+            <span class="small-text">
+              {{request.student.gtID}}
+            </span>
+          </td>
+          <td class="centered-col">
+            <span
+            *ngIf="request.department">
+              {{request.staff.name}}
+              <div class="small-text">
+                {{request.department.name}}
+              </div>
+            </span>
+          </td>
+          <td class="centered-col">
+            <span *ngIf="request.admissionRequired">
+              <span class="glyphicon glyphicon-flag"></span>
+            </span>
+          </td>
+          <td class="centered-col">
+            {{request.inQueue}}
+          </td>
+          <td class="centered-col status">
+            <strong>{{request.status.name}}</strong>
+          </td>
+          <td class="centered-col">
+            {{request.whoseTurn}}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="view-wrapper">
+    <div dropdown
+    class="btn-group option-item">
+      <button dropdownToggle
+      type="button"
+      class="btn btn-sm btn-default dropdown-toggle option-item-button">
+        <div>
+          <strong>{{numOfItems}}</strong> per page
+        </div>
+        <div class="caret-box">
+          <span class="caret"></span>
+        </div>
+      </button>
+      <ul
+      role="menu"
+      class="dropdown-menu option-item-menu">
+        <li
+        role="menuitem"
+        (click)="setItemsPerPage(10)">
+          <a>10</a>
+        </li>
+        <li
+        role="menuitem"
+        (click)="setItemsPerPage(20)">
+          <a>20</a>
+        </li>
+        <li
+        role="menuitem"
+        (click)="setItemsPerPage(50)">
+          <a>50</a>
+        </li>
+        <li
+        role="menuitem"
+        (click)="setItemsPerPage(100)">
+          <a>100</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div
+  class="pagination-wrapper"
+  *ngIf="currentPage">
+    <pagination
+    [totalItems]="result.length"
+    [itemsPerPage]="numOfItems"
+    [maxSize]="maxPager"
+    [(ngModel)]="currentPage"
+    (pageChanged)="goToPage($event)">
+    </pagination>
+  </div>
+</div>

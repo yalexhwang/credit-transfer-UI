@@ -1,0 +1,28 @@
+<div id="header-component">
+  <div
+  class="header-wrapper">
+    <div class="header header-left">
+      <div
+      class="header-menu"
+      [ngClass]="{'current': currentMenu === 'home'}"
+      (click)="selectMenu('home')">
+        Home
+      </div>
+      <div
+      class="header-menu"
+      [ngClass]="{'current': currentMenu === 'faq'}"
+      (click)="selectMenu('faq')">
+        FAQ
+      </div>
+    </div>
+    <div class="header header-right">
+      <div
+      class="header-menu"
+      [ngClass]="{'current': currentMenu === 'admin'}"
+      (click)="selectMenu('admin')"
+      *ngIf="self.isRegistrar">
+        Admin
+      </div>
+    </div>
+  </div>
+</div>

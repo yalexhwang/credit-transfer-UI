@@ -1,0 +1,61 @@
+@import '~styles.scss';
+
+#table-component {
+  .options-wrapper {
+    display: flex;
+    flex-flow: row nowrap;
+    margin-bottom: 15px;
+    .options-wrapper-inner-left {
+      flex: 2;
+    }
+    .options-wrapper-inner-right {
+      flex: 1;
+      flex-flow: row-reverse nowrap;
+    }
+    .options-wrapper-inner {
+      display: flex;
+      #searcher {
+        margin-right: 10px;
+      }
+      .option-item-wrapper {
+        display: flex;
+        flex-flow: row nowrap;
+        padding: 5px;
+        background-color: $lightest-grey;
+        border-radius: 5px 3px;
+        .option-item-keyword-form {
+          margin-left: 5px;
+          width: 100px;
+        }
+        .option-item-secondary {
+          margin-left: 5px;
+        }
+        .option-item {
+          .option-item-button {
+            min-width: 123px;
+            max-width: 300px;
+            display: flex;
+            flex-flow: row nowrap;
+            justify-content: space-between;
+            .inner-button {
+              width: 100%;
+              display: flex;
+              flex-flow: row nowrap;
+              justify-content: space-between;
+            }
+            .caret-box {
+              margin-left: 5px;
+            }
+          }
+          .option-item-menu {
+            font-size: 12px;
+            li > a {
+              cursor: pointer;
+            }
+          }
+        }
+      }
+    }
+  }
+
+}
